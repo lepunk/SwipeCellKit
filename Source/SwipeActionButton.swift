@@ -19,12 +19,14 @@ class SwipeActionButton: UIButton {
     }
     
     var alignmentRect: CGRect {
+        let imageHeight = self.action?.imageSize?.height != nil ? self.action!.imageSize!.height : maximumImageHeight
         let contentRect = self.contentRect(forBounds: bounds)
         let titleHeight = titleBoundingRect(with: verticalAlignment == .centerFirstBaseline ? CGRect.infinite.size : contentRect.size).integral.height
-        let totalHeight = maximumImageHeight + titleHeight + currentSpacing
-
+        let totalHeight = imageHeight + titleHeight + currentSpacing
+        
         return contentRect.center(size: CGSize(width: contentRect.width, height: totalHeight))
     }
+    
     
     convenience init(action: SwipeAction) {
         self.init(frame: .zero)
@@ -83,7 +85,8 @@ class SwipeActionButton: UIButton {
     
     override func imageRect(forContentRect contentRect: CGRect) -> CGRect {
         var rect = contentRect.center(size: self.action?.imageSize ?? .zero)
-        rect.origin.y = alignmentRect.minY + (self.action!.imageSize!.height - rect.height) / 2
+        let imageHeight = self.action?.imageSize?.height != nil ? self.action!.imageSize!.height : maximumImageHeight
+        rect.origin.y = alignmentRect.minY + (imageHeight - rect.height) / 2
         return rect
     }
 }
