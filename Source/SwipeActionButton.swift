@@ -63,7 +63,7 @@ class SwipeActionButton: UIButton {
     func preferredWidth(maximum: CGFloat) -> CGFloat {
         let width = maximum > 0 ? maximum : CGFloat.greatestFiniteMagnitude
         let textWidth = titleBoundingRect(with: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)).width
-        let imageWidth = currentImage?.size.width ?? 0
+        let imageWidth = action?.imageSize?.width ?? currentImage?.size.width ?? 0
         
         return min(width, max(textWidth, imageWidth) + contentEdgeInsets.left + contentEdgeInsets.right)
     }
