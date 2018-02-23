@@ -11,10 +11,9 @@ class SwipeActionButton: UIButton {
     var spacing: CGFloat = 8
     var shouldHighlight = true
     var highlightedBackgroundColor: UIColor?
-
     var maximumImageHeight: CGFloat = 0
     var verticalAlignment: SwipeVerticalAlignment = .centerFirstBaseline
-    
+    var action: SwipeAction?
     var currentSpacing: CGFloat {
         return (currentTitle?.isEmpty == false && maximumImageHeight > 0) ? spacing : 0
     }
@@ -29,7 +28,7 @@ class SwipeActionButton: UIButton {
     
     convenience init(action: SwipeAction) {
         self.init(frame: .zero)
-
+        self.action = action
         contentHorizontalAlignment = .center
         
         tintColor = action.textColor ?? .white
@@ -46,6 +45,7 @@ class SwipeActionButton: UIButton {
         setTitle(action.title, for: .normal)
         setTitleColor(tintColor, for: .normal)
         setTitleColor(highlightedTextColor, for: .highlighted)
+        
         setImage(action.image, for: .normal)
         setImage(action.highlightedImage ?? action.image, for: .highlighted)
     }
@@ -82,8 +82,8 @@ class SwipeActionButton: UIButton {
     }
     
     override func imageRect(forContentRect contentRect: CGRect) -> CGRect {
-        var rect = contentRect.center(size: currentImage?.size ?? .zero)
-        rect.origin.y = alignmentRect.minY + (maximumImageHeight - rect.height) / 2
+        var rect = contentRect.center(size: self.action?.imageSize ?? .zero)
+        rect.origin.y = alignmentRect.minY + (self.action!.imageSize!.height - rect.height) / 2
         return rect
     }
 }

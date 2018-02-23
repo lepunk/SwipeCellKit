@@ -55,6 +55,7 @@ public class SwipeAction: NSObject {
     ///
     /// - note: You must specify a title or an image.
     public var image: UIImage?
+    public var imageSize: CGSize?
     
     /// The highlighted image used for the action button.
     ///
